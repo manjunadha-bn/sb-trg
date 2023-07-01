@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends CrudRepository<Product, Long> {
+public interface InventoryRepository extends CrudRepository<Inventory, Long> {
+  public Optional<Inventory> findInventoryByProduct(Product product);
 }
