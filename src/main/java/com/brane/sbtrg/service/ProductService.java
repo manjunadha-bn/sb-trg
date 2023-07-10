@@ -1,12 +1,13 @@
 package com.brane.sbtrg.service;
 
-import com.brane.sbtrg.entity.Product;
-import com.brane.sbtrg.repository.ProductRepository;
-import jakarta.persistence.EntityNotFoundException;
+import static java.lang.String.format;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static java.lang.String.format;
+import com.brane.sbtrg.entity.Product;
+import com.brane.sbtrg.exception.ProductNotFoundException;
+import com.brane.sbtrg.repository.ProductRepository;
 
 @Service
 public class ProductService {
@@ -14,10 +15,10 @@ public class ProductService {
   @Autowired
   private ProductRepository repository;
 
-  public Product getProductById(long id) {
+  public Product getProductById(long id) throws ProductNotFoundException {
     return repository
       .findById(id)
-      .orElseThrow(() -> new EntityNotFoundException(format("Product: %d does not exist", id)));
+      .orElseThrow(() -> new ProductNotFoundException(format("Product: %d does not exist", id)));
   }
 
   public Iterable<Product> getAllProducts() {
@@ -28,13 +29,13 @@ public class ProductService {
     return repository.save(Product);
   }
 
-  public Product updateProduct(Product product) {
+  public Product updateProduct(Product product) throws ProductNotFoundException{
     Product savedProduct = getProductById(product.getId());
     savedProduct.update(product);
     return repository.save(savedProduct);
   }
 
-  public String deleteProduct(int id) {
+  public String deleteProduct(int id) throws ProductNotFoundException{
     repository.delete(getProductById(id));
     return format("Product: %d Successfully deleted", id);
   }

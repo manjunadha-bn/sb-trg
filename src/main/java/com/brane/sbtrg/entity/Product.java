@@ -7,12 +7,16 @@ import java.util.Objects;
 @Entity
 @Table(name = "PRODUCT")
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    
+	@Id
+ 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq")
+	@SequenceGenerator(name = "product_seq", allocationSize = 1) 
     @Column(nullable = false)
     private long id;
+    
     @Column(nullable = false)
     private String name;
+    
     @Column(nullable = false)
     private String description;
 

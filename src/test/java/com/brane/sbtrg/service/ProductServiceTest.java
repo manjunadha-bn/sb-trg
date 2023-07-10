@@ -1,6 +1,7 @@
 package com.brane.sbtrg.service;
 
 import com.brane.sbtrg.entity.Product;
+import com.brane.sbtrg.exception.ProductNotFoundException;
 import com.brane.sbtrg.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +28,7 @@ class ProductServiceTest {
 
   @Test
   @DisplayName("should get product by id")
-  public void shouldGetProductById() {
+  public void shouldGetProductById() throws ProductNotFoundException {
     long productId = 1L;
     Product product = new Product();
     given(repository.findById(productId)).willReturn(Optional.of(product));
