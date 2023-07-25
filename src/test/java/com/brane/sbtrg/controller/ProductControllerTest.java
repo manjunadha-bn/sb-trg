@@ -1,8 +1,10 @@
 package com.brane.sbtrg.controller;
 
-import com.brane.sbtrg.entity.Product;
-import com.brane.sbtrg.service.ProductService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.brane.sbtrg.model.ProductResponse;
+import com.brane.sbtrg.service.ProductService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,7 +36,7 @@ class ProductControllerTest {
   @DisplayName("should fetch a product by Id")
   void testFetchProductById() throws Exception {
     long productId = 1L;
-    Product product = new Product();
+    ProductResponse product = new ProductResponse();
 
     given(service.getProductById(productId)).willReturn(product);
 
